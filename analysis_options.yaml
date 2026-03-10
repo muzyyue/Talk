@@ -1,0 +1,29 @@
+# This file configures the analyzer, which statically analyzes Dart code to
+# check for errors, warnings, and lints.
+
+include: package:flutter_lints/flutter.yaml
+
+linter:
+  rules:
+    prefer_single_quotes: true
+    avoid_print: false
+    prefer_const_constructors: true
+    prefer_const_declarations: true
+    prefer_const_literals_to_create_immutables: true
+    avoid_redundant_argument_values: true
+    avoid_unnecessary_containers: true
+    prefer_final_fields: true
+    prefer_final_locals: true
+    sort_child_properties_last: true
+    use_key_in_widget_constructors: true
+    prefer_relative_imports: false
+    always_use_package_imports: true
+
+analyzer:
+  exclude:
+    - "**/*.g.dart"
+    - "**/*.freezed.dart"
+    - "build/**"
+    - ".dart_tool/**"
+  errors:
+    invalid_annotation_target: ignore
