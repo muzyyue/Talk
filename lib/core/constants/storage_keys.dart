@@ -11,6 +11,7 @@ class StorageKeys {
   static const String storiesBox = 'stories_box';
   static const String settingsBox = 'settings_box';
   static const String cacheBox = 'cache_box';
+  static const String apiConfigBox = 'api_config_box';
 
   static const String tokenKey = 'auth_token';
   static const String refreshTokenKey = 'refresh_token';
@@ -19,4 +20,5 @@ class StorageKeys {
   static const String localeKey = 'locale';
   static const String isFirstLaunchKey = 'is_first_launch';
   static const String lastSyncTimeKey = 'last_sync_time';
+  static const String apiConfigKey = 'api_config';
 }

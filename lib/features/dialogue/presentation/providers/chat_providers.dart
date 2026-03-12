@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
 import 'package:talk/features/dialogue/data/models/chat_session_model.dart';
 import 'package:talk/features/dialogue/data/repositories/chat_repository.dart';
-import 'package:talk/features/dialogue/data/services/ai_service.dart';
+import 'package:talk/core/services/ai_service.dart';
 import 'package:talk/features/character_card/domain/entities/character_card.dart';
 import 'package:talk/features/character_card/domain/usecases/get_character_cards_usecase.dart';
 
@@ -161,7 +161,7 @@ class ChatNotifier extends StateNotifier<ChatState> {
 final chatProvider = StateNotifierProvider.family<ChatNotifier, ChatState, String>(
   (ref, characterCardId) => ChatNotifier(
     ref.watch(chatRepositoryProvider),
-    ref.watch(mockAIServiceProvider),
+    ref.watch(aiServiceProvider),
     ref.watch(getCharacterCardDetailUseCaseProvider),
   ),
 );

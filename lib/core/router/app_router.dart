@@ -9,6 +9,7 @@ import 'package:talk/features/character_card/presentation/pages/character_card_c
 import 'package:talk/features/character_card/presentation/pages/character_card_import_page.dart';
 import 'package:talk/features/character_card/domain/usecases/get_character_cards_usecase.dart';
 import 'package:talk/features/dialogue/presentation/pages/chat_page.dart';
+import 'package:talk/features/settings/presentation/pages/api_settings_page.dart';
 import 'package:talk/shared/widgets/common_widgets.dart';
 
 /// 应用路由定义
@@ -38,6 +39,7 @@ class AppRoutes {
 
   static const String settings = '/settings';
   static const String profile = '/profile';
+  static const String apiSettings = '/settings/api';
 }
 
 /// 角色卡详情 Provider
@@ -141,6 +143,11 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: AppRoutes.settings,
         name: 'settings',
         builder: (context, state) => const SettingsPage(),
+      ),
+      GoRoute(
+        path: AppRoutes.apiSettings,
+        name: 'apiSettings',
+        builder: (context, state) => const APISettingsPage(),
       ),
     ],
     errorBuilder: (context, state) => ErrorPage(error: state.error),
@@ -459,6 +466,16 @@ class SettingsPage extends StatelessWidget {
       ),
       body: ListView(
         children: [
+          _buildSectionHeader('AI 服务'),
+          ListTile(
+            leading: const Icon(Icons.smart_toy_outlined),
+            title: const Text('API 设置'),
+            subtitle: const Text('配置 AI 服务提供商'),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => context.push(AppRoutes.apiSettings),
+          ),
+          const Divider(),
+          _buildSectionHeader('外观'),
           ListTile(
             leading: const Icon(Icons.palette_outlined),
             title: const Text('主题'),
@@ -474,11 +491,66 @@ class SettingsPage extends StatelessWidget {
             onTap: () {},
           ),
           const Divider(),
+          _buildSectionHeader('数据'),
           ListTile(
             leading: const Icon(Icons.delete_outline),
             title: const Text('清除缓存'),
             subtitle: const Text('0 MB'),
             onTap: () {},
+          ),
+          ListTile(
+            leading: const Icon(Icons.restore_outlined),
+            title: const Text('重置设置'),
+            subtitle: const Text('恢复默认配置'),
+            onTap: () => _showResetDialog(context),
+          ),
+          const Divider(),
+          _buildSectionHeader('关于'),
+          ListTile(
+            leading: const Icon(Icons.info_outline),
+            title: const Text('关于星语物语'),
+            subtitle: const Text('版本 1.0.0'),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () {},
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSectionHeader(String title) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+      child: Text(
+        title,
+        style: AppTextStyles.body2.copyWith(
+          color: AppColors.textSecondary,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
+  }
+
+  void _showResetDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('重置设置'),
+        content: const Text('确定要重置所有设置吗？此操作无法撤销。'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('取消'),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('设置已重置')),
+              );
+            },
+            style: TextButton.styleFrom(foregroundColor: AppColors.error),
+            child: const Text('重置'),
           ),
         ],
       ),
