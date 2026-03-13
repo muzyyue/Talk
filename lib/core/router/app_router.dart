@@ -4,9 +4,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:talk/core/constants/constants.dart';
 import 'package:talk/core/theme/theme.dart';
 import 'package:talk/features/character_card/presentation/pages/character_card_list_page.dart';
-import 'package:talk/features/character_card/presentation/pages/character_card_detail_page.dart';
 import 'package:talk/features/character_card/presentation/pages/character_card_create_page.dart';
 import 'package:talk/features/character_card/presentation/pages/character_card_import_page.dart';
+import 'package:talk/features/character_card/presentation/pages/fix_default_cards_page.dart';
+import 'package:talk/features/character_card/presentation/pages/character_card_detail_page.dart';
 import 'package:talk/features/character_card/domain/usecases/get_character_cards_usecase.dart';
 import 'package:talk/features/dialogue/presentation/pages/chat_page.dart';
 import 'package:talk/features/settings/presentation/pages/api_settings_page.dart';
@@ -30,6 +31,7 @@ class AppRoutes {
   static const String characterCardCreate = '/character-cards/create';
   static const String characterCardEdit = '/character-cards/:id/edit';
   static const String characterCardImport = '/character-cards/import';
+  static const String fixDefaultCards = '/character-cards/fix-defaults';
 
   static const String chat = '/chat/:characterCardId';
   static const String chatHistory = '/chat/history';
@@ -98,6 +100,11 @@ final routerProvider = Provider<GoRouter>((ref) {
                 path: 'import',
                 name: 'characterCardImport',
                 builder: (context, state) => const CharacterCardImportPage(),
+              ),
+              GoRoute(
+                path: 'fix-defaults',
+                name: 'fixDefaultCards',
+                builder: (context, state) => const FixDefaultCardsPage(),
               ),
               GoRoute(
                 path: ':id',

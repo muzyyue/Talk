@@ -46,21 +46,38 @@ class CharacterCardRepositoryImpl implements CharacterCardRepository {
     AppLogger.debug('CharacterCardRepository initialized');
   }
 
+  /// 确保仓库已初始化
+  /// 
+  /// 如果未初始化则进行初始化
+  Future<void> ensureInitialized() async {
+    if (!_initialized) {
+      await init();
+    }
+  }
+
   /// 初始化默认角色卡
   ///
   /// 检查并添加默认角色卡，避免重复添加
   Future<void> _initializeDefaultCards() async {
+    AppLogger.debug('Checking for default character cards...');
     final existingCards = box.values.toList();
+    AppLogger.debug('Existing cards count: ${existingCards.length}');
     final hasDefaultCard = existingCards.any(
       (card) => DefaultCharacterCards.isDefaultCard(card),
     );
+    AppLogger.debug('Has default card: $hasDefaultCard');
 
     if (!hasDefaultCard) {
+      AppLogger.debug('Adding default character cards...');
       final defaultCards = DefaultCharacterCards.getDefaultCards();
+      AppLogger.debug('Default cards count: ${defaultCards.length}');
       for (final card in defaultCards) {
         await box.put(card.id, card);
-        AppLogger.debug('Added default character card: ${card.data.name}');
+        AppLogger.debug('Added default character card: ${card.data.name} (${card.id})');
       }
+      AppLogger.debug('Total cards after adding: ${box.values.length}');
+    } else {
+      AppLogger.debug('Default card already exists, skipping');
     }
   }
 

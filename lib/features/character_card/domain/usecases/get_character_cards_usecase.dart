@@ -9,6 +9,10 @@ class GetCharacterCardsUseCase {
   GetCharacterCardsUseCase(this._repository);
 
   Future<List<CharacterCard>> call() async {
+    // 确保仓库已初始化
+    if (_repository is CharacterCardRepositoryImpl) {
+      await (_repository as CharacterCardRepositoryImpl).ensureInitialized();
+    }
     final models = await _repository.getAll();
     return models.map<CharacterCard>(CharacterCard.fromModel).toList();
   }

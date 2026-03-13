@@ -39,6 +39,13 @@ class CharacterCardListPage extends ConsumerWidget {
                 ),
               ),
               const PopupMenuItem(
+                value: 'fix',
+                child: ListTile(
+                  leading: Icon(Icons.build),
+                  title: Text('修复默认角色卡'),
+                ),
+              ),
+              const PopupMenuItem(
                 value: 'refresh',
                 child: ListTile(
                   leading: Icon(Icons.refresh),
@@ -111,6 +118,9 @@ class CharacterCardListPage extends ConsumerWidget {
     switch (action) {
       case 'import':
         context.push(AppRoutes.characterCardImport);
+        break;
+      case 'fix':
+        context.push(AppRoutes.fixDefaultCards);
         break;
       case 'refresh':
         ref.read(characterCardListProvider.notifier).refresh();

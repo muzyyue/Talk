@@ -7,11 +7,25 @@ import 'package:talk/shared/providers/global_providers.dart';
 /// 星语物语应用
 /// 
 /// 应用根组件，配置主题、路由、国际化等
-class StarTaleApp extends ConsumerWidget {
+class StarTaleApp extends ConsumerStatefulWidget {
   const StarTaleApp({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<StarTaleApp> createState() => _StarTaleAppState();
+}
+
+class _StarTaleAppState extends ConsumerState<StarTaleApp> {
+  @override
+  void initState() {
+    super.initState();
+    // 触发全局初始化（包括角色卡仓库）
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(globalInitProvider);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final themeMode = ref.watch(themeModeProvider);
     final router = ref.watch(routerProvider);
 
