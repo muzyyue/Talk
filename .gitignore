@@ -21,6 +21,9 @@ migrate_working_dir/
 # VS Code
 .vscode/
 
+# Visual Studio
+.vs/
+
 # Flutter/Dart/Pub related
 **/doc/api/
 .dart_tool/

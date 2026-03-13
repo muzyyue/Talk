@@ -5,6 +5,7 @@ import 'package:talk/core/constants/storage_keys.dart';
 import 'package:talk/core/utils/logger.dart';
 import 'package:talk/features/character_card/data/models/character_card_model.dart';
 import 'package:talk/features/character_card/data/models/character_card_adapter.dart';
+import 'package:talk/features/character_card/data/services/default_character_cards.dart';
 
 /// 角色卡仓库
 /// 
@@ -38,8 +39,29 @@ class CharacterCardRepositoryImpl implements CharacterCardRepository {
     Hive.registerAdapter(CharacterProfileModelAdapter());
     Hive.registerAdapter(CharacterCardSourceAdapter());
     _box = await Hive.openBox<CharacterCardModel>(StorageKeys.characterCardsBox);
+    
+    await _initializeDefaultCards();
+    
     _initialized = true;
     AppLogger.debug('CharacterCardRepository initialized');
+  }
+
+  /// 初始化默认角色卡
+  ///
+  /// 检查并添加默认角色卡，避免重复添加
+  Future<void> _initializeDefaultCards() async {
+    final existingCards = box.values.toList();
+    final hasDefaultCard = existingCards.any(
+      (card) => DefaultCharacterCards.isDefaultCard(card),
+    );
+
+    if (!hasDefaultCard) {
+      final defaultCards = DefaultCharacterCards.getDefaultCards();
+      for (final card in defaultCards) {
+        await box.put(card.id, card);
+        AppLogger.debug('Added default character card: ${card.data.name}');
+      }
+    }
   }
 
   /// 获取 Box 实例
