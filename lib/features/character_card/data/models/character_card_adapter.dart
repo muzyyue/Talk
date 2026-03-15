@@ -146,8 +146,20 @@ class CharacterExtensionsModelAdapter extends TypeAdapter<CharacterExtensionsMod
       portraitUrl: fields[1] as String?,
       nickname: fields[2] as String?,
       profile: fields[3] as CharacterProfileModel?,
-      custom: fields[4] as Map<String, dynamic>?,
+      custom: _convertMap(fields[4]),
     );
+  }
+
+  /// 转换 Map 类型
+  /// 
+  /// 将 Map<dynamic, dynamic> 转换为 Map<String, dynamic>
+  Map<String, dynamic>? _convertMap(dynamic value) {
+    if (value == null) return null;
+    if (value is Map<String, dynamic>) return value;
+    if (value is Map) {
+      return Map<String, dynamic>.from(value);
+    }
+    return null;
   }
 
   @override

@@ -80,7 +80,7 @@ class DefaultCharacterCards {
             dislikes: ['被束缚', '背叛', '虚伪', '欺凌弱小'],
             voiceDescription: '清脆悦耳，带着一丝俏皮，但认真时会变得坚定有力',
           ),
-          custom: {
+          custom: <String, dynamic>{
             'realm': '神境',
             'constitution': '天凰道体（原冰凰古圣体）',
             'abilities': ['冰凰之力', '天凰道体', '唤灵', '空间造诣'],
