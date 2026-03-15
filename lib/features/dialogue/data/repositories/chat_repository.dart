@@ -29,10 +29,20 @@ class ChatRepositoryImpl implements ChatRepository {
   Future<void> init() async {
     if (_initialized) return;
 
-    Hive.registerAdapter(ChatSessionModelAdapter());
-    Hive.registerAdapter(ChatMessageModelAdapter());
-    Hive.registerAdapter(MessageRoleAdapter());
-    Hive.registerAdapter(MessageMetadataModelAdapter());
+    // 注册 Hive 适配器（忽略重复注册的错误）
+    try {
+      Hive.registerAdapter(ChatSessionModelAdapter());
+    } catch (_) {}
+    try {
+      Hive.registerAdapter(ChatMessageModelAdapter());
+    } catch (_) {}
+    try {
+      Hive.registerAdapter(MessageRoleAdapter());
+    } catch (_) {}
+    try {
+      Hive.registerAdapter(MessageMetadataModelAdapter());
+    } catch (_) {}
+    
     _box = await Hive.openBox<ChatSessionModel>(StorageKeys.chatSessionsBox);
     _initialized = true;
     AppLogger.debug('ChatRepository initialized');

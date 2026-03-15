@@ -33,26 +33,29 @@ class CharacterCardRepositoryImpl implements CharacterCardRepository {
   Future<void> init() async {
     if (_initialized) return;
     
-    Hive.registerAdapter(CharacterCardModelAdapter());
-    Hive.registerAdapter(CharacterCardDataModelAdapter());
-    Hive.registerAdapter(CharacterExtensionsModelAdapter());
-    Hive.registerAdapter(CharacterProfileModelAdapter());
-    Hive.registerAdapter(CharacterCardSourceAdapter());
+    // 注册 Hive 适配器（忽略重复注册的错误）
+    try {
+      Hive.registerAdapter(CharacterCardModelAdapter());
+    } catch (_) {}
+    try {
+      Hive.registerAdapter(CharacterCardDataModelAdapter());
+    } catch (_) {}
+    try {
+      Hive.registerAdapter(CharacterExtensionsModelAdapter());
+    } catch (_) {}
+    try {
+      Hive.registerAdapter(CharacterProfileModelAdapter());
+    } catch (_) {}
+    try {
+      Hive.registerAdapter(CharacterCardSourceAdapter());
+    } catch (_) {}
+    
     _box = await Hive.openBox<CharacterCardModel>(StorageKeys.characterCardsBox);
     
     await _initializeDefaultCards();
     
     _initialized = true;
     AppLogger.debug('CharacterCardRepository initialized');
-  }
-
-  /// 确保仓库已初始化
-  /// 
-  /// 如果未初始化则进行初始化
-  Future<void> ensureInitialized() async {
-    if (!_initialized) {
-      await init();
-    }
   }
 
   /// 初始化默认角色卡

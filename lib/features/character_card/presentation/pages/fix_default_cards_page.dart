@@ -38,7 +38,7 @@ class _FixDefaultCardsPageState extends ConsumerState<FixDefaultCardsPage> {
       final repository = ref.read(characterCardRepositoryProvider) as CharacterCardRepositoryImpl;
       
       // 确保仓库已初始化
-      await repository.ensureInitialized();
+      await repository.init();
       
       setState(() {
         _status = '正在添加默认角色卡...';
