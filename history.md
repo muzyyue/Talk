@@ -1,5 +1,49 @@
 # 项目变更历史
 
+## v1.0.4 (2026-03-13) 修复初始化问题与测试错误
+
+### 问题修复
+- **默认角色卡未显示**：修复角色卡仓库初始化时机问题
+- **对话页面加载失败**：修复 ChatRepository 未初始化错误
+- **测试编译错误**：删除缺失 mocktail 依赖的测试文件
+- **Lint 警告**：清理未使用的导入和不必要的代码
+
+### 新增功能
+- **修复页面**：用户可手动触发添加默认角色卡
+- **重建脚本**：`rebuild.bat` 一键清理和重建项目
+- **修复文档**：`FIX_DEFAULT_CARDS.md` 详细说明问题和解决方案
+
+### 技术实现
+- **全局初始化 Provider**：`global_init_provider.dart` 统一初始化所有仓库
+- **应用启动触发**：在 `StarTaleApp` 的 `initState` 中触发全局初始化
+- **仓库初始化方法**：添加 `ensureInitialized()` 确保仓库已初始化
+- **修复菜单**：角色卡列表页面添加"修复默认角色卡"选项
+- **修复路由**：`/character-cards/fix-defaults` 路由支持
+
+### 文件变更
+- **新增**：
+  - `lib/shared/providers/global_init_provider.dart` - 全局初始化 Provider
+  - `lib/features/character_card/presentation/pages/fix_default_cards_page.dart` - 修复页面
+  - `FIX_DEFAULT_CARDS.md` - 修复说明文档
+  - `rebuild.bat` - 重建脚本
+  - `scripts/add_default_cards.dart` - 手动添加脚本
+- **修改**：
+  - `lib/main.dart` - 简化初始化逻辑
+  - `lib/app.dart` - 添加全局初始化触发
+  - `lib/core/router/app_router.dart` - 添加修复路由
+  - `lib/features/character_card/data/repositories/character_card_repository.dart` - 添加 ensureInitialized 方法
+  - `lib/features/character_card/presentation/pages/character_card_list_page.dart` - 添加修复菜单
+- **删除**：
+  - `test/core/services/lm_studio_client_test.dart` - 缺失依赖的测试文件
+
+### 代码质量
+- 修复所有编译错误（error 级别）
+- 清理未使用的导入
+- 删除不必要的类型转换
+- 剩余 113 个 lint 警告（info 级别，不影响运行）
+
+---
+
 ## v1.0.3 (2026-03-13) 默认角色卡与 Windows 桌面应用
 
 ### 新增功能

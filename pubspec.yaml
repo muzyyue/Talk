@@ -1,7 +1,7 @@
 name: talk
 description: "星语物语 (StarTale) - 一款社交模拟手机应用"
 publish_to: 'none'
-version: 1.0.3+3
+version: 1.0.4+4
 
 environment:
   sdk: ^3.11.1

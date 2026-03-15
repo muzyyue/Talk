@@ -1,5 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
+import 'package:talk/shared/providers/global_init_provider.dart';
+
+export 'package:talk/shared/providers/global_init_provider.dart';
 
 /// 主题模式 Provider
 /// 
